@@ -90,6 +90,10 @@ const DEFAULT_SHIPPING = [
 ];
 
 // ====== Helpers ======
+function writeData(data) {
+  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
+}
+
 function readData() {
   if (!fs.existsSync(DATA_FILE)) {
     const initial = {
@@ -106,27 +110,22 @@ function readData() {
       shipping: DEFAULT_SHIPPING,
       orders: [],
     };
-    fs.writeFileSync(DATA_FILE, JSON.stringify(initial, null, 2), "utf-8");
+    writeData(initial);
     return initial;
   }
 
   const db = JSON.parse(fs.readFileSync(DATA_FILE, "utf-8"));
 
-  // Backfill shipping if missing (for older data.json)
+  // Backfill shipping
   if (!Array.isArray(db.shipping) || db.shipping.length < 58) {
     db.shipping = DEFAULT_SHIPPING;
     writeData(db);
   }
 
-  // Ensure keys exist
   if (!db.settings) db.settings = {};
   if (!Array.isArray(db.orders)) db.orders = [];
 
   return db;
-}
-
-function writeData(data) {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
 }
 
 function requireAdmin(req, res, next) {
@@ -193,10 +192,7 @@ const storage = multer.diskStorage({
     cb(null, safe);
   },
 });
-const upload = multer({
-  storage,
-  limits: { fileSize: 6 * 1024 * 1024 },
-});
+const upload = multer({ storage, limits: { fileSize: 6 * 1024 * 1024 } });
 
 // ====== Pages ======
 app.get("/admin", (_req, res) => {
@@ -323,7 +319,7 @@ app.put("/api/admin/settings", requireAdmin, (req, res) => {
   res.json({ ok: true, settings: db.settings });
 });
 
-// ====== Admin shipping (NEW) ======
+// ====== Admin shipping ======
 app.get("/api/admin/shipping", requireAdmin, (_req, res) => {
   const db = readData();
   res.json({ ok: true, shipping: db.shipping });
@@ -336,7 +332,6 @@ app.put("/api/admin/shipping", requireAdmin, (req, res) => {
   if (!Array.isArray(incoming))
     return res.status(400).json({ ok: false, error: "BAD_SHIPPING" });
 
-  // Validate: keep same ids/names, only update prices
   const map = new Map(incoming.map((x) => [Number(x.id), x]));
   const updated = db.shipping.map((w) => {
     const it = map.get(w.id);
@@ -392,7 +387,13 @@ app.get("/api/admin/orders", requireAdmin, (req, res) => {
 app.put("/api/admin/orders/:id/status", requireAdmin, (req, res) => {
   const id = String(req.params.id || "");
   const status = String(req.body?.status || "new");
-  const allowed = new Set(["new", "confirmed", "shipped", "cancelled"]);
+  const allowed = new Set([
+    "new",
+    "confirmed",
+    "shipped",
+    "delivered",
+    "cancelled",
+  ]);
   if (!allowed.has(status))
     return res.status(400).json({ ok: false, error: "BAD_STATUS" });
 
@@ -401,6 +402,19 @@ app.put("/api/admin/orders/:id/status", requireAdmin, (req, res) => {
   if (!order) return res.status(404).json({ ok: false, error: "NOT_FOUND" });
 
   order.status = status;
+  writeData(db);
+  res.json({ ok: true });
+});
+
+// ✅ NEW: delete order
+app.delete("/api/admin/orders/:id", requireAdmin, (req, res) => {
+  const id = String(req.params.id || "");
+  const db = readData();
+  const before = db.orders.length;
+  db.orders = db.orders.filter((o) => o.id !== id);
+
+  if (db.orders.length === before)
+    return res.status(404).json({ ok: false, error: "NOT_FOUND" });
   writeData(db);
   res.json({ ok: true });
 });
