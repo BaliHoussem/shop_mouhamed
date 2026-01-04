@@ -1,0 +1,394 @@
+{
+  "settings": {
+    "product_name": "متجر العلمة",
+    "product_desc": "بصحتكم",
+    "price": 12000,
+    "old_price": 0,
+    "images": [
+      "/uploads/1767471221671_6c48ade8b5a3.jpg"
+    ],
+    "updated_at": "2026-01-03T20:14:17.193Z"
+  },
+  "orders": [
+    {
+      "id": "35fa41fe-1aa3-48db-a88d-2e5b5d1f8560",
+      "created_at": "2026-01-03T20:18:15.111Z",
+      "customer_name": "VBS",
+      "phone": "0777777777",
+      "wilaya_id": 19,
+      "wilaya_name": "سطيف",
+      "shipping_type": "home",
+      "quantity": 1,
+      "product_price": 12000,
+      "shipping_price": 800,
+      "subtotal": 12000,
+      "total": 12800,
+      "status": "new"
+    },
+    {
+      "id": "705a2bb4-98a9-4a71-9206-836377a28d67",
+      "created_at": "2026-01-03T20:00:41.514Z",
+      "customer_name": "استرو",
+      "phone": "0551575314",
+      "wilaya_id": 41,
+      "wilaya_name": "سوق أهراس",
+      "shipping_type": "home",
+      "quantity": 1,
+      "product_price": 3800,
+      "shipping_price": 900,
+      "subtotal": 3800,
+      "total": 4700,
+      "status": "confirmed"
+    }
+  ],
+  "shipping": [
+    {
+      "id": 1,
+      "name": "أدرار",
+      "home": 1000,
+      "office": 700
+    },
+    {
+      "id": 2,
+      "name": "الشلف",
+      "home": 800,
+      "office": 500
+    },
+    {
+      "id": 3,
+      "name": "الأغواط",
+      "home": 900,
+      "office": 600
+    },
+    {
+      "id": 4,
+      "name": "أم البواقي",
+      "home": 800,
+      "office": 500
+    },
+    {
+      "id": 5,
+      "name": "باتنة",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 6,
+      "name": "بجاية",
+      "home": 800,
+      "office": 500
+    },
+    {
+      "id": 7,
+      "name": "بسكرة",
+      "home": 900,
+      "office": 600
+    },
+    {
+      "id": 8,
+      "name": "بشار",
+      "home": 1100,
+      "office": 800
+    },
+    {
+      "id": 9,
+      "name": "البليدة",
+      "home": 600,
+      "office": 350
+    },
+    {
+      "id": 10,
+      "name": "البويرة",
+      "home": 700,
+      "office": 450
+    },
+    {
+      "id": 11,
+      "name": "تمنراست",
+      "home": 1300,
+      "office": 1000
+    },
+    {
+      "id": 12,
+      "name": "تبسة",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 13,
+      "name": "تلمسان",
+      "home": 900,
+      "office": 600
+    },
+    {
+      "id": 14,
+      "name": "تيارت",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 15,
+      "name": "تيزي وزو",
+      "home": 700,
+      "office": 450
+    },
+    {
+      "id": 16,
+      "name": "الجزائر",
+      "home": 500,
+      "office": 250
+    },
+    {
+      "id": 17,
+      "name": "الجلفة",
+      "home": 900,
+      "office": 600
+    },
+    {
+      "id": 18,
+      "name": "جيجل",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 19,
+      "name": "سطيف",
+      "home": 800,
+      "office": 500
+    },
+    {
+      "id": 20,
+      "name": "سعيدة",
+      "home": 900,
+      "office": 600
+    },
+    {
+      "id": 21,
+      "name": "سكيكدة",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 22,
+      "name": "سيدي بلعباس",
+      "home": 900,
+      "office": 600
+    },
+    {
+      "id": 23,
+      "name": "عنابة",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 24,
+      "name": "قالمة",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 25,
+      "name": "قسنطينة",
+      "home": 800,
+      "office": 500
+    },
+    {
+      "id": 26,
+      "name": "المدية",
+      "home": 700,
+      "office": 450
+    },
+    {
+      "id": 27,
+      "name": "مستغانم",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 28,
+      "name": "المسيلة",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 29,
+      "name": "معسكر",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 30,
+      "name": "ورقلة",
+      "home": 1000,
+      "office": 700
+    },
+    {
+      "id": 31,
+      "name": "وهران",
+      "home": 800,
+      "office": 500
+    },
+    {
+      "id": 32,
+      "name": "البيض",
+      "home": 1000,
+      "office": 700
+    },
+    {
+      "id": 33,
+      "name": "إليزي",
+      "home": 1200,
+      "office": 900
+    },
+    {
+      "id": 34,
+      "name": "برج بوعريريج",
+      "home": 800,
+      "office": 500
+    },
+    {
+      "id": 35,
+      "name": "بومرداس",
+      "home": 650,
+      "office": 400
+    },
+    {
+      "id": 36,
+      "name": "الطارف",
+      "home": 900,
+      "office": 600
+    },
+    {
+      "id": 37,
+      "name": "تندوف",
+      "home": 1200,
+      "office": 900
+    },
+    {
+      "id": 38,
+      "name": "تيسمسيلت",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 39,
+      "name": "الوادي",
+      "home": 1000,
+      "office": 700
+    },
+    {
+      "id": 40,
+      "name": "خنشلة",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 41,
+      "name": "سوق أهراس",
+      "home": 900,
+      "office": 600
+    },
+    {
+      "id": 42,
+      "name": "تيبازة",
+      "home": 650,
+      "office": 400
+    },
+    {
+      "id": 43,
+      "name": "ميلة",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 44,
+      "name": "عين الدفلى",
+      "home": 750,
+      "office": 500
+    },
+    {
+      "id": 45,
+      "name": "النعامة",
+      "home": 1000,
+      "office": 700
+    },
+    {
+      "id": 46,
+      "name": "عين تموشنت",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 47,
+      "name": "غرداية",
+      "home": 950,
+      "office": 650
+    },
+    {
+      "id": 48,
+      "name": "غليزان",
+      "home": 850,
+      "office": 550
+    },
+    {
+      "id": 49,
+      "name": "تيميمون",
+      "home": 1100,
+      "office": 800
+    },
+    {
+      "id": 50,
+      "name": "برج باجي مختار",
+      "home": 1400,
+      "office": 1100
+    },
+    {
+      "id": 51,
+      "name": "أولاد جلال",
+      "home": 900,
+      "office": 600
+    },
+    {
+      "id": 52,
+      "name": "بني عباس",
+      "home": 1100,
+      "office": 800
+    },
+    {
+      "id": 53,
+      "name": "عين صالح",
+      "home": 1300,
+      "office": 1000
+    },
+    {
+      "id": 54,
+      "name": "عين قزام",
+      "home": 1400,
+      "office": 1100
+    },
+    {
+      "id": 55,
+      "name": "تقرت",
+      "home": 1000,
+      "office": 700
+    },
+    {
+      "id": 56,
+      "name": "جانت",
+      "home": 1200,
+      "office": 900
+    },
+    {
+      "id": 57,
+      "name": "المغير",
+      "home": 950,
+      "office": 650
+    },
+    {
+      "id": 58,
+      "name": "المنيعة",
+      "home": 950,
+      "office": 650
+    }
+  ]
+}

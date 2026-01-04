@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة التحكم</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Cairo", sans-serif;
+      }
+      .card {
+        border-radius: 1.25rem;
+        box-shadow: 0 15px 35px -15px rgba(0, 0, 0, 0.18);
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-50">
+    <nav class="bg-white py-4 shadow-sm sticky top-0 z-50">
+      <div class="container mx-auto px-4 flex justify-between items-center">
+        <div class="text-2xl font-black text-orange-600">ADMIN</div>
+        <button
+          id="logoutBtn"
+          class="hidden bg-gray-900 text-white px-4 py-2 rounded-xl font-bold"
+        >
+          خروج
+        </button>
+      </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-10">
+      <!-- Login -->
+      <section id="loginBox" class="max-w-md mx-auto bg-white p-8 card">
+        <h1 class="text-2xl font-black">دخول لوحة التحكم</h1>
+        <p class="text-gray-600 mt-2">أدخل كلمة السر للدخول.</p>
+
+        <div class="mt-6 space-y-4">
+          <input
+            id="password"
+            type="password"
+            placeholder="كلمة السر"
+            class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-orange-200"
+          />
+          <button
+            id="loginBtn"
+            class="w-full bg-orange-500 hover:bg-orange-600 transition text-white py-4 rounded-xl font-black"
+          >
+            دخول
+          </button>
+          <div id="loginStatus" class="hidden rounded-xl p-4 text-sm"></div>
+        </div>
+      </section>
+
+      <!-- Panel -->
+      <section id="panel" class="hidden">
+        <div class="grid lg:grid-cols-3 gap-6">
+          <!-- Product settings -->
+          <div class="lg:col-span-1 bg-white p-6 card">
+            <h2 class="text-xl font-black">إعدادات المنتج</h2>
+
+            <div class="mt-5 space-y-4">
+              <input
+                id="p_name"
+                class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-orange-200"
+                placeholder="اسم المنتج"
+              />
+              <textarea
+                id="p_desc"
+                rows="4"
+                class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-orange-200"
+                placeholder="وصف المنتج"
+              ></textarea>
+
+              <div class="grid grid-cols-2 gap-4">
+                <input
+                  id="p_price"
+                  type="number"
+                  class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-orange-200"
+                  placeholder="السعر"
+                />
+                <input
+                  id="p_old_price"
+                  type="number"
+                  class="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-orange-200"
+                  placeholder="السعر قبل التخفيض"
+                />
+              </div>
+
+              <button
+                id="saveProductBtn"
+                class="w-full bg-gray-900 hover:bg-black transition text-white py-3 rounded-xl font-black"
+              >
+                حفظ الإعدادات
+              </button>
+
+              <div
+                id="productStatus"
+                class="hidden rounded-xl p-4 text-sm"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Images -->
+          <div class="lg:col-span-2 bg-white p-6 card">
+            <div class="flex items-center justify-between">
+              <h2 class="text-xl font-black">صور المنتج</h2>
+              <label
+                class="bg-orange-500 hover:bg-orange-600 transition text-white px-4 py-2 rounded-xl font-bold cursor-pointer"
+              >
+                رفع صور
+                <input
+                  id="imgInput"
+                  type="file"
+                  class="hidden"
+                  accept="image/*"
+                  multiple
+                />
+              </label>
+            </div>
+
+            <p class="text-sm text-gray-600 mt-2">
+              ترتيب الصور يبان في الصفحة الرئيسية.
+            </p>
+
+            <div
+              id="imagesGrid"
+              class="mt-5 grid sm:grid-cols-2 md:grid-cols-3 gap-4"
+            ></div>
+            <div
+              id="imagesStatus"
+              class="hidden rounded-xl p-4 text-sm mt-4"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Shipping (NEW) -->
+        <div class="bg-white p-6 card mt-6">
+          <div
+            class="flex flex-col md:flex-row md:items-center md:justify-between gap-3"
+          >
+            <h2 class="text-xl font-black">أسعار التوصيل حسب الولاية</h2>
+            <div class="flex gap-2 items-center">
+              <input
+                id="shipSearch"
+                placeholder="بحث بالولاية..."
+                class="p-3 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-orange-200 w-64"
+              />
+              <button
+                id="saveShippingBtn"
+                class="bg-orange-500 hover:bg-orange-600 transition text-white px-4 py-2 rounded-xl font-bold"
+              >
+                حفظ أسعار التوصيل
+              </button>
+            </div>
+          </div>
+
+          <p class="text-sm text-gray-600 mt-2">
+            عدّل (المنزل / المكتب) لكل ولاية ثم اضغط حفظ.
+          </p>
+
+          <div class="overflow-auto mt-5">
+            <table class="w-full text-sm">
+              <thead class="text-gray-600">
+                <tr class="border-b">
+                  <th class="py-3 text-right">الولاية</th>
+                  <th class="py-3 text-right">للمنزل (دج)</th>
+                  <th class="py-3 text-right">للمكتب (دج)</th>
+                </tr>
+              </thead>
+              <tbody id="shippingBody"></tbody>
+            </table>
+          </div>
+
+          <div
+            id="shippingStatus"
+            class="hidden rounded-xl p-4 text-sm mt-4"
+          ></div>
+        </div>
+
+        <!-- Orders -->
+        <div class="bg-white p-6 card mt-6">
+          <div
+            class="flex flex-col md:flex-row md:items-center md:justify-between gap-3"
+          >
+            <h2 class="text-xl font-black">الطلبات</h2>
+            <div class="flex gap-2">
+              <select
+                id="statusFilter"
+                class="p-3 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-orange-200"
+              >
+                <option value="">كل الحالات</option>
+                <option value="new">جديد</option>
+                <option value="confirmed">مؤكد</option>
+                <option value="shipped">مُرسل</option>
+                <option value="cancelled">ملغي</option>
+              </select>
+              <button
+                id="refreshOrdersBtn"
+                class="bg-gray-900 hover:bg-black transition text-white px-4 py-2 rounded-xl font-bold"
+              >
+                تحديث
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-auto mt-5">
+            <table class="w-full text-sm">
+              <thead class="text-gray-600">
+                <tr class="border-b">
+                  <th class="py-3 text-right">التاريخ</th>
+                  <th class="py-3 text-right">الاسم</th>
+                  <th class="py-3 text-right">الهاتف</th>
+                  <th class="py-3 text-right">الولاية</th>
+                  <th class="py-3 text-right">الشحن</th>
+                  <th class="py-3 text-right">الكمية</th>
+                  <th class="py-3 text-right">المجموع</th>
+                  <th class="py-3 text-right">الحالة</th>
+                </tr>
+              </thead>
+              <tbody id="ordersBody"></tbody>
+            </table>
+          </div>
+
+          <div
+            id="ordersStatus"
+            class="hidden rounded-xl p-4 text-sm mt-4"
+          ></div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const loginBox = document.getElementById("loginBox");
+        const panel = document.getElementById("panel");
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        const loginStatus = document.getElementById("loginStatus");
+        const productStatus = document.getElementById("productStatus");
+        const imagesStatus = document.getElementById("imagesStatus");
+        const ordersStatus = document.getElementById("ordersStatus");
+        const shippingStatus = document.getElementById("shippingStatus");
+
+        function showBox(el, type, msg) {
+          el.classList.remove("hidden");
+          el.className =
+            "rounded-xl p-4 text-sm " +
+            (type === "ok"
+              ? "bg-green-50 text-green-700 border border-green-200"
+              : "bg-red-50 text-red-700 border border-red-200");
+          el.textContent = msg;
+        }
+        function hideBox(el) {
+          el.classList.add("hidden");
+        }
+
+        async function api(url, opts = {}) {
+          const res = await fetch(url, { credentials: "same-origin", ...opts });
+          const j = await res.json().catch(() => ({ ok: false }));
+          return { res, j };
+        }
+
+        async function syncUI() {
+          const { j } = await api("/api/admin/me");
+          if (j.ok && j.isAdmin) {
+            loginBox.classList.add("hidden");
+            panel.classList.remove("hidden");
+            logoutBtn.classList.remove("hidden");
+            await loadSettings();
+            await loadShipping();
+            await loadOrders();
+          } else {
+            loginBox.classList.remove("hidden");
+            panel.classList.add("hidden");
+            logoutBtn.classList.add("hidden");
+          }
+        }
+
+        document
+          .getElementById("loginBtn")
+          .addEventListener("click", async () => {
+            hideBox(loginStatus);
+            const password = document.getElementById("password").value;
+            if (!password)
+              return showBox(loginStatus, "err", "أدخل كلمة السر.");
+
+            const { res, j } = await api("/api/admin/login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ password }),
+            });
+
+            if (!res.ok || !j.ok)
+              return showBox(loginStatus, "err", "كلمة السر خاطئة.");
+            document.getElementById("password").value = "";
+            await syncUI();
+          });
+
+        logoutBtn.addEventListener("click", async () => {
+          await api("/api/admin/logout", { method: "POST" });
+          await syncUI();
+        });
+
+        // ===== Product settings =====
+        const p_name = document.getElementById("p_name");
+        const p_desc = document.getElementById("p_desc");
+        const p_price = document.getElementById("p_price");
+        const p_old_price = document.getElementById("p_old_price");
+
+        let images = [];
+
+        async function loadSettings() {
+          hideBox(productStatus);
+          hideBox(imagesStatus);
+
+          const { res, j } = await api("/api/admin/settings");
+          if (!res.ok || !j.ok)
+            return showBox(productStatus, "err", "فشل تحميل الإعدادات.");
+
+          const s = j.settings;
+          p_name.value = s.product_name || "";
+          p_desc.value = s.product_desc || "";
+          p_price.value = s.price || 0;
+          p_old_price.value = s.old_price || 0;
+          images = Array.isArray(s.images) ? s.images : [];
+
+          renderImages();
+        }
+
+        document
+          .getElementById("saveProductBtn")
+          .addEventListener("click", async () => {
+            hideBox(productStatus);
+
+            const payload = {
+              product_name: p_name.value.trim(),
+              product_desc: p_desc.value.trim(),
+              price: Number(p_price.value || 0),
+              old_price: Number(p_old_price.value || 0),
+              images: images,
+            };
+
+            if (!payload.product_name)
+              return showBox(productStatus, "err", "اسم المنتج مطلوب.");
+            if (payload.price <= 0)
+              return showBox(productStatus, "err", "السعر لازم يكون صحيح.");
+
+            const { res, j } = await api("/api/admin/settings", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            if (!res.ok || !j.ok)
+              return showBox(productStatus, "err", "فشل حفظ الإعدادات.");
+            showBox(productStatus, "ok", "✅ تم حفظ إعدادات المنتج.");
+          });
+
+        // ===== Images =====
+        const imgInput = document.getElementById("imgInput");
+        const imagesGrid = document.getElementById("imagesGrid");
+
+        function renderImages() {
+          imagesGrid.innerHTML = "";
+          if (!images.length) {
+            const empty = document.createElement("div");
+            empty.className = "text-gray-500 text-sm";
+            empty.textContent = "لا توجد صور بعد. ارفع صور للمنتج.";
+            imagesGrid.appendChild(empty);
+            return;
+          }
+
+          images.forEach((url, idx) => {
+            const card = document.createElement("div");
+            card.className = "border rounded-2xl overflow-hidden bg-white";
+
+            const img = document.createElement("img");
+            img.src = url;
+            img.className = "w-full h-44 object-cover";
+            img.alt = "صورة";
+
+            const actions = document.createElement("div");
+            actions.className = "p-3 flex gap-2";
+
+            const up = document.createElement("button");
+            up.className =
+              "flex-1 bg-gray-100 hover:bg-gray-200 transition rounded-xl py-2 font-bold";
+            up.textContent = "⬆️";
+            up.onclick = () => moveImage(idx, -1);
+
+            const down = document.createElement("button");
+            down.className =
+              "flex-1 bg-gray-100 hover:bg-gray-200 transition rounded-xl py-2 font-bold";
+            down.textContent = "⬇️";
+            down.onclick = () => moveImage(idx, +1);
+
+            const del = document.createElement("button");
+            del.className =
+              "flex-1 bg-red-50 hover:bg-red-100 transition rounded-xl py-2 font-bold text-red-700";
+            del.textContent = "حذف";
+            del.onclick = () => deleteImageByUrl(url);
+
+            actions.appendChild(up);
+            actions.appendChild(down);
+            actions.appendChild(del);
+
+            card.appendChild(img);
+            card.appendChild(actions);
+            imagesGrid.appendChild(card);
+          });
+        }
+
+        function moveImage(i, dir) {
+          const j = i + dir;
+          if (j < 0 || j >= images.length) return;
+          const tmp = images[i];
+          images[i] = images[j];
+          images[j] = tmp;
+          renderImages();
+        }
+
+        async function deleteImageByUrl(url) {
+          hideBox(imagesStatus);
+
+          if (url.startsWith("/uploads/")) {
+            const filename = url.replace("/uploads/", "");
+            await api(`/api/admin/images/${encodeURIComponent(filename)}`, {
+              method: "DELETE",
+            });
+          }
+
+          images = images.filter((x) => x !== url);
+
+          const { res, j } = await api("/api/admin/settings", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              product_name: p_name.value.trim(),
+              product_desc: p_desc.value.trim(),
+              price: Number(p_price.value || 0),
+              old_price: Number(p_old_price.value || 0),
+              images: images,
+            }),
+          });
+
+          if (!res.ok || !j.ok)
+            return showBox(imagesStatus, "err", "فشل حذف الصورة.");
+          showBox(imagesStatus, "ok", "✅ تم حذف الصورة.");
+          renderImages();
+        }
+
+        imgInput.addEventListener("change", async (e) => {
+          hideBox(imagesStatus);
+          const files = Array.from(e.target.files || []);
+          if (!files.length) return;
+
+          const fd = new FormData();
+          for (const f of files) fd.append("images", f);
+
+          const { res, j } = await fetch("/api/admin/images", {
+            method: "POST",
+            body: fd,
+            credentials: "same-origin",
+          }).then(async (r) => ({
+            res: r,
+            j: await r.json().catch(() => ({ ok: false })),
+          }));
+
+          if (!res.ok || !j.ok) {
+            imgInput.value = "";
+            return showBox(imagesStatus, "err", "فشل رفع الصور.");
+          }
+
+          images.push(...j.urls);
+
+          const { res: r2, j: j2 } = await api("/api/admin/settings", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              product_name: p_name.value.trim(),
+              product_desc: p_desc.value.trim(),
+              price: Number(p_price.value || 0),
+              old_price: Number(p_old_price.value || 0),
+              images: images,
+            }),
+          });
+
+          imgInput.value = "";
+
+          if (!r2.ok || !j2.ok)
+            return showBox(imagesStatus, "err", "تم الرفع لكن فشل حفظ الصور.");
+          showBox(imagesStatus, "ok", "✅ تم رفع الصور وحفظها.");
+          renderImages();
+        });
+
+        // ===== Shipping (NEW) =====
+        const shippingBody = document.getElementById("shippingBody");
+        const shipSearch = document.getElementById("shipSearch");
+        const saveShippingBtn = document.getElementById("saveShippingBtn");
+
+        let shipping = [];
+
+        function renderShipping() {
+          shippingBody.innerHTML = "";
+          const q = (shipSearch.value || "").trim();
+
+          const rows = shipping.filter((w) => {
+            if (!q) return true;
+            return String(w.name).includes(q) || String(w.id).includes(q);
+          });
+
+          rows.forEach((w) => {
+            const tr = document.createElement("tr");
+            tr.className = "border-b";
+
+            tr.innerHTML = `
+        <td class="py-3 font-bold">${w.id} - ${w.name}</td>
+        <td class="py-3"></td>
+        <td class="py-3"></td>
+      `;
+
+            const homeInput = document.createElement("input");
+            homeInput.type = "number";
+            homeInput.value = Number(w.home || 0);
+            homeInput.className =
+              "p-2 bg-gray-50 rounded-lg outline-none focus:ring-2 focus:ring-orange-200 w-40";
+            homeInput.oninput = () => {
+              w.home = Number(homeInput.value || 0);
+            };
+
+            const officeInput = document.createElement("input");
+            officeInput.type = "number";
+            officeInput.value = Number(w.office || 0);
+            officeInput.className =
+              "p-2 bg-gray-50 rounded-lg outline-none focus:ring-2 focus:ring-orange-200 w-40";
+            officeInput.oninput = () => {
+              w.office = Number(officeInput.value || 0);
+            };
+
+            tr.children[1].appendChild(homeInput);
+            tr.children[2].appendChild(officeInput);
+
+            shippingBody.appendChild(tr);
+          });
+
+          if (!rows.length) {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td class="py-4 text-gray-500" colspan="3">لا توجد نتائج.</td>`;
+            shippingBody.appendChild(tr);
+          }
+        }
+
+        async function loadShipping() {
+          hideBox(shippingStatus);
+          const { res, j } = await api("/api/admin/shipping");
+          if (!res.ok || !j.ok)
+            return showBox(shippingStatus, "err", "فشل تحميل أسعار التوصيل.");
+          shipping = j.shipping || [];
+          renderShipping();
+        }
+
+        shipSearch.addEventListener("input", renderShipping);
+
+        saveShippingBtn.addEventListener("click", async () => {
+          hideBox(shippingStatus);
+
+          const payload = {
+            shipping: shipping.map((w) => ({
+              id: w.id,
+              home: Number(w.home || 0),
+              office: Number(w.office || 0),
+            })),
+          };
+
+          const { res, j } = await api("/api/admin/shipping", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          if (!res.ok || !j.ok)
+            return showBox(shippingStatus, "err", "فشل حفظ أسعار التوصيل.");
+          shipping = j.shipping || shipping;
+          showBox(shippingStatus, "ok", "✅ تم حفظ أسعار التوصيل بنجاح.");
+          renderShipping();
+        });
+
+        // ===== Orders =====
+        const ordersBody = document.getElementById("ordersBody");
+        const statusFilter = document.getElementById("statusFilter");
+        document
+          .getElementById("refreshOrdersBtn")
+          .addEventListener("click", loadOrders);
+        statusFilter.addEventListener("change", loadOrders);
+
+        function fmtTime(iso) {
+          try {
+            return new Date(iso).toLocaleString("fr-DZ");
+          } catch {
+            return iso;
+          }
+        }
+        function fmtDZD(n) {
+          return (Number(n) || 0).toLocaleString("fr-DZ") + " دج";
+        }
+
+        async function loadOrders() {
+          hideBox(ordersStatus);
+          ordersBody.innerHTML = "";
+
+          const qs = statusFilter.value
+            ? `?status=${encodeURIComponent(statusFilter.value)}`
+            : "";
+          const { res, j } = await api("/api/admin/orders" + qs);
+          if (!res.ok || !j.ok)
+            return showBox(ordersStatus, "err", "فشل تحميل الطلبات.");
+
+          const data = j.orders || [];
+          if (!data.length) {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td class="py-4 text-gray-500" colspan="8">لا توجد طلبات.</td>`;
+            ordersBody.appendChild(tr);
+            return;
+          }
+
+          data.forEach((o) => {
+            const tr = document.createElement("tr");
+            tr.className = "border-b";
+
+            const select = document.createElement("select");
+            select.className =
+              "p-2 bg-gray-50 rounded-lg outline-none focus:ring-2 focus:ring-orange-200";
+            const items = [
+              ["new", "جديد"],
+              ["confirmed", "مؤكد"],
+              ["shipped", "مُرسل"],
+              ["cancelled", "ملغي"],
+            ];
+            items.forEach(([v, t]) => {
+              const op = document.createElement("option");
+              op.value = v;
+              op.textContent = t;
+              if (o.status === v) op.selected = true;
+              select.appendChild(op);
+            });
+
+            select.onchange = async () => {
+              const { res: r, j: jj } = await api(
+                `/api/admin/orders/${encodeURIComponent(o.id)}/status`,
+                {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ status: select.value }),
+                },
+              );
+              if (!r.ok || !jj.ok)
+                return showBox(ordersStatus, "err", "فشل تغيير الحالة.");
+              showBox(ordersStatus, "ok", "✅ تم تحديث الحالة.");
+            };
+
+            tr.innerHTML = `
+        <td class="py-3">${fmtTime(o.created_at)}</td>
+        <td class="py-3 font-bold">${o.customer_name}</td>
+        <td class="py-3">${o.phone}</td>
+        <td class="py-3">${o.wilaya_name}</td>
+        <td class="py-3">${o.shipping_type === "home" ? "للمنزل" : "مكتب"}</td>
+        <td class="py-3">${o.quantity}</td>
+        <td class="py-3 font-black">${fmtDZD(o.total)}</td>
+        <td class="py-3"></td>
+      `;
+            tr.children[7].appendChild(select);
+            ordersBody.appendChild(tr);
+          });
+        }
+
+        // init
+        await syncUI();
+      });
+    </script>
+  </body>
+</html>

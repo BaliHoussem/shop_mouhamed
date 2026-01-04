@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>المنتج الأكثر مبيعاً | اطلب الآن</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Cairo", sans-serif;
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #ff6b6b 0%, #f06595 100%);
+      }
+      .order-card {
+        border-radius: 2rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      }
+      .no-select {
+        user-select: none;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-50">
+    <nav class="bg-white py-4 shadow-sm sticky top-0 z-50">
+      <div class="container mx-auto px-4 flex justify-between items-center">
+        <div class="text-2xl font-black text-orange-600">LOGO</div>
+        <a
+          href="#order"
+          class="bg-orange-500 text-white px-6 py-2 rounded-full font-bold hover:bg-orange-600 transition"
+          >اطلب الآن</a
+        >
+      </div>
+    </nav>
+
+    <header class="py-10 bg-white">
+      <div
+        class="container mx-auto px-4 grid md:grid-cols-2 gap-10 items-center"
+      >
+        <div>
+          <span
+            class="bg-orange-100 text-orange-600 px-4 py-1 rounded-full text-sm font-bold"
+            >متوفر الآن في الجزائر 🇩🇿</span
+          >
+
+          <h1 class="text-4xl md:text-6xl font-black mt-4" id="title">
+            المنتج
+          </h1>
+          <p class="text-gray-600 text-lg mt-6" id="desc"></p>
+
+          <div class="mt-8 flex items-center gap-4">
+            <div class="text-4xl font-black text-green-600" id="priceNow">
+              0 دج
+            </div>
+            <div class="text-2xl text-gray-400 line-through" id="priceOld">
+              0 دج
+            </div>
+          </div>
+
+          <div class="mt-8 flex gap-3">
+            <a
+              href="#order"
+              class="bg-orange-500 hover:bg-orange-600 transition text-white px-7 py-3 rounded-2xl font-black"
+              >اطلب الآن</a
+            >
+            <button
+              type="button"
+              id="openGalleryBtn"
+              class="border border-gray-200 hover:border-gray-300 transition px-7 py-3 rounded-2xl font-bold text-gray-700"
+            >
+              شاهد الصور
+            </button>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div
+            class="relative rounded-3xl shadow-2xl overflow-hidden bg-gray-100"
+          >
+            <img
+              id="productImg"
+              alt="صورة المنتج"
+              class="w-full h-[320px] md:h-[420px] object-cover no-select"
+              draggable="false"
+            />
+
+            <button
+              type="button"
+              id="prevImg"
+              class="absolute top-1/2 -translate-y-1/2 right-3 bg-white/80 hover:bg-white transition rounded-full w-11 h-11 flex items-center justify-center shadow"
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              id="nextImg"
+              class="absolute top-1/2 -translate-y-1/2 left-3 bg-white/80 hover:bg-white transition rounded-full w-11 h-11 flex items-center justify-center shadow"
+            >
+              ›
+            </button>
+
+            <div
+              id="dots"
+              class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2"
+            ></div>
+          </div>
+
+          <div id="thumbs" class="mt-4 grid grid-cols-5 gap-3"></div>
+        </div>
+      </div>
+    </header>
+
+    <section id="order" class="py-20 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div
+          class="max-w-4xl mx-auto bg-white order-card grid md:grid-cols-5 overflow-hidden"
+        >
+          <div class="md:col-span-2 gradient-bg p-10 text-white">
+            <h2 class="text-3xl font-bold mb-6">لماذا تطلب منا؟</h2>
+            <ul class="space-y-3 text-lg">
+              <li>✅ دفع عند الاستلام</li>
+              <li>✅ توصيل سريع</li>
+              <li>✅ ضمان سنة</li>
+            </ul>
+          </div>
+
+          <form id="orderForm" class="md:col-span-3 p-10 space-y-5">
+            <h3 class="text-2xl font-bold">معلومات الزبون</h3>
+
+            <input
+              type="text"
+              id="hp"
+              class="hidden"
+              tabindex="-1"
+              autocomplete="off"
+            />
+
+            <div class="grid grid-cols-2 gap-4">
+              <input
+                id="name"
+                required
+                placeholder="الاسم"
+                class="p-4 bg-gray-50 rounded-xl w-full outline-none focus:ring-2 focus:ring-orange-200"
+              />
+              <input
+                id="phone"
+                required
+                placeholder="رقم الهاتف (0550123456)"
+                class="p-4 bg-gray-50 rounded-xl w-full outline-none focus:ring-2 focus:ring-orange-200"
+              />
+            </div>
+
+            <select
+              id="wilaya"
+              required
+              class="p-4 bg-gray-50 rounded-xl w-full outline-none focus:ring-2 focus:ring-orange-200"
+            >
+              <option value="">اختر الولاية (58 ولاية)</option>
+            </select>
+
+            <div class="flex gap-4">
+              <label class="flex-1 cursor-pointer">
+                <input
+                  type="radio"
+                  name="shipType"
+                  value="home"
+                  checked
+                  class="hidden peer"
+                />
+                <div
+                  class="p-4 border rounded-xl text-center peer-checked:border-orange-500 peer-checked:ring-2 peer-checked:ring-orange-100"
+                >
+                  توصيل للمنزل
+                </div>
+              </label>
+              <label class="flex-1 cursor-pointer">
+                <input
+                  type="radio"
+                  name="shipType"
+                  value="office"
+                  class="hidden peer"
+                />
+                <div
+                  class="p-4 border rounded-xl text-center peer-checked:border-orange-500 peer-checked:ring-2 peer-checked:ring-orange-100"
+                >
+                  مكتب ياليدين
+                </div>
+              </label>
+            </div>
+
+            <div class="bg-gray-900 text-white p-6 rounded-xl space-y-3">
+              <div class="flex justify-between text-sm">
+                <span>سعر المنتج</span><span id="subtotalPrice">0 دج</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span>التوصيل</span><span id="shipPrice">0 دج</span>
+              </div>
+              <div class="flex justify-between text-xl font-black">
+                <span>المجموع</span><span id="totalPrice">0 دج</span>
+              </div>
+
+              <div class="flex justify-end items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  id="minusBtn"
+                  class="px-4 py-1 bg-gray-700 hover:bg-gray-600 transition rounded-lg"
+                >
+                  -
+                </button>
+                <span id="qty" class="font-black text-lg w-10 text-center"
+                  >1</span
+                >
+                <button
+                  type="button"
+                  id="plusBtn"
+                  class="px-4 py-1 bg-gray-700 hover:bg-gray-600 transition rounded-lg"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div id="statusBox" class="hidden rounded-xl p-4 text-sm"></div>
+
+            <button
+              id="submitBtn"
+              class="w-full bg-orange-500 hover:bg-orange-600 transition text-white py-4 rounded-xl font-black"
+            >
+              تأكيد الطلب
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        function formatDZD(n) {
+          return (Number(n) || 0).toLocaleString("fr-DZ") + " دج";
+        }
+
+        // ====== state ======
+        let product = {
+          product_name: "",
+          product_desc: "",
+          price: 0,
+          old_price: 0,
+          images: [],
+        };
+        let shipping = []; // wilayas from server
+
+        // ====== load settings ======
+        async function loadSettings() {
+          const r = await fetch("/api/settings");
+          const j = await r.json();
+          if (j.ok) product = j.settings;
+
+          document.getElementById("title").textContent =
+            product.product_name || "المنتج";
+          document.getElementById("desc").textContent =
+            product.product_desc || "";
+          document.getElementById("priceNow").textContent = formatDZD(
+            product.price,
+          );
+          document.getElementById("priceOld").textContent = formatDZD(
+            product.old_price,
+          );
+
+          images =
+            Array.isArray(product.images) && product.images.length
+              ? product.images
+              : [
+                  "https://images.unsplash.com/photo-1570222094114-d054a817e56b?auto=format&fit=crop&q=80&w=1200",
+                ];
+          current = 0;
+          renderImage();
+        }
+
+        // ====== load shipping ======
+        const wilayaSelect = document.getElementById("wilaya");
+
+        async function loadShipping() {
+          const r = await fetch("/api/shipping");
+          const j = await r.json();
+          if (j.ok) shipping = j.shipping || [];
+
+          // fill select
+          wilayaSelect.innerHTML = `<option value="">اختر الولاية (58 ولاية)</option>`;
+          shipping.forEach((w) => {
+            const o = document.createElement("option");
+            o.value = w.id;
+            o.textContent = `${w.id} - ${w.name}`;
+            wilayaSelect.appendChild(o);
+          });
+        }
+
+        // ====== gallery ======
+        let images = [];
+        let current = 0;
+        const productImg = document.getElementById("productImg");
+        const dots = document.getElementById("dots");
+        const thumbs = document.getElementById("thumbs");
+
+        function renderDots() {
+          dots.innerHTML = "";
+          images.forEach((_, i) => {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className =
+              "w-2.5 h-2.5 rounded-full transition " +
+              (i === current ? "bg-white" : "bg-white/50 hover:bg-white/80");
+            b.onclick = () => {
+              current = i;
+              renderImage();
+            };
+            dots.appendChild(b);
+          });
+        }
+
+        function renderThumbs() {
+          thumbs.innerHTML = "";
+          images.forEach((src, i) => {
+            const wrap = document.createElement("button");
+            wrap.type = "button";
+            wrap.className =
+              "rounded-xl overflow-hidden border transition " +
+              (i === current
+                ? "border-orange-500"
+                : "border-gray-200 hover:border-gray-300");
+            const im = document.createElement("img");
+            im.src = src;
+            im.className = "w-full h-16 object-cover";
+            im.draggable = false;
+            wrap.onclick = () => {
+              current = i;
+              renderImage();
+            };
+            wrap.appendChild(im);
+            thumbs.appendChild(wrap);
+          });
+        }
+
+        function renderImage() {
+          productImg.src = images[current];
+          renderDots();
+          renderThumbs();
+        }
+
+        document.getElementById("prevImg").onclick = () => {
+          current = (current - 1 + images.length) % images.length;
+          renderImage();
+        };
+        document.getElementById("nextImg").onclick = () => {
+          current = (current + 1) % images.length;
+          renderImage();
+        };
+        document.getElementById("openGalleryBtn").onclick = () =>
+          window.scrollTo({ top: 0, behavior: "smooth" });
+
+        // ====== pricing ======
+        let qty = 1;
+
+        function getShip() {
+          const w = shipping.find((x) => x.id == wilayaSelect.value);
+          const shipType = document.querySelector(
+            "input[name='shipType']:checked",
+          ).value;
+          if (!w) return 0;
+          return shipType === "office"
+            ? Number(w.office || 0)
+            : Number(w.home || 0);
+        }
+
+        function calc() {
+          const ship = getShip();
+          const subtotal = (product.price || 0) * qty;
+          const total = subtotal + ship;
+          document.getElementById("subtotalPrice").textContent =
+            formatDZD(subtotal);
+          document.getElementById("shipPrice").textContent = formatDZD(ship);
+          document.getElementById("totalPrice").textContent = formatDZD(total);
+          return { ship, subtotal, total };
+        }
+
+        document.getElementById("plusBtn").onclick = () => {
+          qty++;
+          document.getElementById("qty").textContent = qty;
+          calc();
+        };
+        document.getElementById("minusBtn").onclick = () => {
+          if (qty > 1) qty--;
+          document.getElementById("qty").textContent = qty;
+          calc();
+        };
+        wilayaSelect.onchange = calc;
+        document
+          .querySelectorAll("input[name='shipType']")
+          .forEach((i) => (i.onchange = calc));
+
+        // ====== order submit ======
+        const form = document.getElementById("orderForm");
+        const statusBox = document.getElementById("statusBox");
+        const submitBtn = document.getElementById("submitBtn");
+
+        function showStatus(type, msg) {
+          statusBox.classList.remove("hidden");
+          statusBox.className =
+            "rounded-xl p-4 text-sm " +
+            (type === "ok"
+              ? "bg-green-50 text-green-700 border border-green-200"
+              : "bg-red-50 text-red-700 border border-red-200");
+          statusBox.textContent = msg;
+        }
+
+        function isValidPhone(p) {
+          const phone = (p || "").replace(/\s+/g, "");
+          return /^(0)(5|6|7)\d{8}$/.test(phone);
+        }
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          statusBox.classList.add("hidden");
+
+          if (document.getElementById("hp").value) return;
+
+          const name = document.getElementById("name").value.trim();
+          const phone = document.getElementById("phone").value.trim();
+          const w = shipping.find((x) => x.id == wilayaSelect.value);
+          const shipping_type = document.querySelector(
+            "input[name='shipType']:checked",
+          ).value;
+
+          if (!name) return showStatus("err", "من فضلك أدخل الاسم.");
+          if (!isValidPhone(phone))
+            return showStatus("err", "رقم الهاتف غير صحيح. مثال: 0550123456");
+          if (!w) return showStatus("err", "اختر الولاية.");
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = "جارٍ تسجيل الطلب...";
+
+          try {
+            const res = await fetch("/api/order", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name,
+                phone,
+                wilaya_id: w.id,
+                shipping_type,
+                quantity: qty,
+              }),
+            });
+            const j = await res.json();
+
+            if (!j.ok) {
+              if (j.error === "RATE_LIMIT")
+                return showStatus(
+                  "err",
+                  "⏳ رجاءً انتظر 10 ثواني ثم أعد المحاولة.",
+                );
+              return showStatus("err", "❌ فشل تسجيل الطلب. عاود جرّب.");
+            }
+
+            showStatus("ok", "✅ تم تسجيل الطلب بنجاح! سنتصل بك للتأكيد.");
+            form.reset();
+            qty = 1;
+            document.getElementById("qty").textContent = qty;
+            wilayaSelect.value = "";
+            document.querySelector(
+              "input[name='shipType'][value='home']",
+            ).checked = true;
+            calc();
+          } catch (err) {
+            console.error(err);
+            showStatus("err", "❌ تعذر الاتصال بالسيرفر. تأكد من الإنترنت.");
+          } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "تأكيد الطلب";
+          }
+        });
+
+        // start
+        await loadSettings();
+        await loadShipping();
+        calc();
+      });
+    </script>
+  </body>
+</html>
